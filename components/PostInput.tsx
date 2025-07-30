@@ -9,7 +9,11 @@ import { useSelector } from 'react-redux'
 import { RootState } from '@/redux/store'
 import { db } from '@/firebase'
 
-function PostInput() {
+interface PostInputProps {
+    insideModal?: boolean;
+}
+
+function PostInput({insideModal}: PostInputProps) {
   const [text, setText] = useState("")
   const user = useSelector((state:RootState) => state.user)
 
@@ -26,10 +30,11 @@ function PostInput() {
     setText("")
   }
   return (
-    <div className='flex gap-2 items-center border-b border-gray-200 pb-2'>
-        <Image src="/Assets/bee.png" width={60} height={60} alt='images' className='w-20 h-20'/>
+    <div className='flex gap-2 items-center border-b border-gray-200 pb-2 mt-19 '>
+        <Image src={insideModal ? "/assets/profile.jpg" : "/Assets/bee.png"}
+         width={60} height={60} alt='images' className='w-20 h-20 rounded-full'/>
         <div className='w-full'>
-            <textarea className='resize-none outline-none w-full min-h-[50px] text-lg' placeholder="What's happening?!"
+            <textarea className='resize-none outline-none w-full min-h-[50px] text-lg' placeholder={insideModal ? "Send a reply " : "What's happening?!"}
             onChange={(event) => setText(event.target.value)} value={text}
             />
             <div className='flex justify-between items-center pt-5 border-t border-gray-100'>
